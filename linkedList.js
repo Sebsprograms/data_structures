@@ -84,15 +84,33 @@ class LinkedList {
         before.next = before.next.next;
         this.length--;
     }
+
+    // Challenge: Implement reverse()
+    reverse() {
+        // Start with the head
+        let currentNode = this.head;
+        // The head will now be the tail
+        this.tail = currentNode;
+        // Before the head is null
+        let prevNode = null;
+
+        // While the current node is not the tail
+        while (currentNode.next !== null) {
+            let nextNode = currentNode.next;
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+        // Current node is the head
+        currentNode.next = prevNode;
+        this.head = currentNode;
+    }
 }
 
 
-const myLinkedList = new LinkedList(10);
-myLinkedList.append(3);
-myLinkedList.prepend(9);
-console.log(myLinkedList.formattedData());
-myLinkedList.insert(1, 444);
-
-console.log(myLinkedList.formattedData());
-myLinkedList.remove(0);
-console.log(myLinkedList.formattedData());
+const myLinkedList = new LinkedList(3);
+myLinkedList.append(2);
+myLinkedList.append(1);
+console.log(myLinkedList);
+myLinkedList.reverse();
+console.log(myLinkedList);
