@@ -1,14 +1,14 @@
-// Challenge: Create an implementation of a Linked list with menthods:
-// append, prepend, insert, remove (delete)
+// Challenge: Convert the linked list code into a doubly linked list
 
 class Node {
     constructor(value) {
         this.value = value;
         this.next = null;
+        this.prev = null;
     }
 }
 
-class LinkedList {
+class DoublyLinkedList {
     constructor(value) {
         this.head = new Node(value);
         this.tail = this.head;
@@ -17,6 +17,7 @@ class LinkedList {
 
     append(value) {
         const newNode = new Node(value);
+        newNode.prev = this.tail;
         this.tail.next = newNode;
         this.tail = newNode;
         this.length++;
@@ -24,6 +25,7 @@ class LinkedList {
 
     prepend(value) {
         const newNode = new Node(value);
+        this.head.prev = newNode;
         newNode.next = this.head;
         this.head = newNode;
         this.length++;
@@ -68,6 +70,8 @@ class LinkedList {
         const newNode = new Node(value)
         const currentNodeAtIndex = this.traverseToIndex(index - 1);
         newNode.next = currentNodeAtIndex.next;
+        currentNodeAtIndex.next.prev = newNode;
+        newNode.prev = currentNodeAtIndex;
         currentNodeAtIndex.next = newNode;
         this.length++;
     }
@@ -81,18 +85,15 @@ class LinkedList {
             this.length--;
         }
         const before = this.traverseToIndex(index);
+        before.next.next.prev = before
         before.next = before.next.next;
         this.length--;
     }
 }
 
 
-const myLinkedList = new LinkedList(10);
-myLinkedList.append(3);
-myLinkedList.prepend(9);
-console.log(myLinkedList.formattedData());
-myLinkedList.insert(1, 444);
-
-console.log(myLinkedList.formattedData());
-myLinkedList.remove(0);
-console.log(myLinkedList.formattedData());
+const myDoublyLinkedList = new DoublyLinkedList(4);
+myDoublyLinkedList.prepend(3);
+myDoublyLinkedList.prepend(2);
+myDoublyLinkedList.prepend(1);
+console.log(myDoublyLinkedList);
